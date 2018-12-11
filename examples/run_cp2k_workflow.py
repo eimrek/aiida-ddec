@@ -1,3 +1,6 @@
+from aiida import load_dbenv
+load_dbenv()
+
 from aiida.common.example_helpers import test_and_get_code  # noqa
 from aiida.orm.data.structure import StructureData  # noqa
 from aiida.orm.data.parameter import ParameterData  # noqa
@@ -5,7 +8,7 @@ from aiida.orm.data.base import Str
 from aiida.work.run import submit
 
 from ase.io import read
-from workflows.charges import DdecCp2kChargesWorkChain
+from aiida_ddec.workflows import DdecCp2kChargesWorkChain
 
 atoms = read('Cu-MOF-74.cif')
 
@@ -26,8 +29,8 @@ ddec_options = {
     "max_wallclock_seconds": 1 * 60 * 60,
     "withmpi": False,
     }
-cp2k_code = test_and_get_code('cp2k@fidis-debug', expected_code_type='cp2k')
-ddec_code = test_and_get_code('ddec@fidis-debug', expected_code_type='ddec')
+cp2k_code = test_and_get_code('cp2k_6.1_18464@daint-s746', expected_code_type='cp2k')
+ddec_code = test_and_get_code('chargemol_09_26_2017@daint-s746', expected_code_type='ddec')
 submit(DdecCp2kChargesWorkChain,
         structure=structure,
         cp2k_code=cp2k_code,
@@ -35,4 +38,4 @@ submit(DdecCp2kChargesWorkChain,
 #        cp2k_parent_folder=load_node(5337),
         ddec_code=ddec_code,
         _ddec_options=ddec_options,
-        ) 
+        )
