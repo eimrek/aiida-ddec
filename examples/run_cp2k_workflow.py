@@ -49,5 +49,5 @@ submit(DdecCp2kChargesWorkChain,
 #        cp2k_parent_folder=load_node(5337),
         ddec_code=ddec_code,
         _ddec_options=ddec_options,
-        ddec_params=ddec_params,
+        ddec_parameters=ddec_params,
         )
